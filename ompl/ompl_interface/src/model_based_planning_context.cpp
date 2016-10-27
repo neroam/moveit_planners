@@ -496,6 +496,9 @@ bool ompl_interface::ModelBasedPlanningContext::solve(planning_interface::Motion
 
     res.trajectory_.reset(new robot_trajectory::RobotTrajectory(getRobotModel(), getGroupName()));
     getSolutionPath(*res.trajectory_);
+    std::vector< ob::PlannerSolution > sols= ompl_simple_setup_->getProblemDefinition()->getSolutions();
+    res.trajectory_cost_ = sols[0].cost_.value();
+    logInform("Get the solution cost : %f", res.trajectory_cost_);
     res.planning_time_ = ptime;
     return true;
   }
